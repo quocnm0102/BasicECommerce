@@ -1,0 +1,8 @@
+John Doe
+john.doe@example.com
+Apple
+4.95
+2
+Orange
+3.99
+1

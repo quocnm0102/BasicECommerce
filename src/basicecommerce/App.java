@@ -5,17 +5,94 @@
  */
 package basicecommerce;
 
+import basicecommerce.models.Product;
+import basicecommerce.models.User;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 /**
  *
  * @author admin
  */
 public class App {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        runJar(args);
     }
-    
+
+    public static void runJar(String[] args) {
+        for (int i = 0; i < args.length; i++) {
+            try {
+                runTest(args[i]);
+            } catch (IOException ex) {
+                System.out.println(String.format("File %s invalid", args[i]));
+            }
+        }
+    }
+
+    public static void runTest(String path) throws IOException {
+        File file = new File(path);
+
+        BufferedReader br = new BufferedReader(new FileReader(file));
+
+        String st;
+        int countProdInfo = 0;
+        String username = br.readLine();
+        String email = br.readLine();
+        User user = new User(username, email);
+        String[] prodInfo = new String[3];
+        while ((st = br.readLine()) != null) {
+            prodInfo[countProdInfo] = st;
+            if (countProdInfo == 2) {
+                Product product = new Product(prodInfo[0], Double.valueOf(prodInfo[1]));
+                int amount = Integer.parseInt(prodInfo[2]);
+                if (amount <= 0) {
+                    user.removeProduct(product, Integer.parseInt(prodInfo[2]));
+                } else {
+                    user.addProduct(product, Integer.parseInt(prodInfo[2]));
+                }
+                countProdInfo = 0;
+                prodInfo = new String[3];
+            } else {
+                ++countProdInfo;
+            }
+        }
+        System.out.println(String.format("%.2f", user.getTotalPrice()));
+    }
+
+    public static void testCase1() {
+        User user = new User("John Doe", "john.doe@example.com");
+        Product apple = new Product("Apple", 4.95);
+        Product orange = new Product("Orange", 3.99);
+        user.addProduct(apple, 2);
+        user.addProduct(orange, 1);
+        double totalPrice = user.getTotalPrice();
+        assert (totalPrice == 13.89);
+        System.out.println("Pass test case 1");
+    }
+
+    public static void testCase2() {
+        User user = new User("John Doe", "john.doe@example.com");
+        Product apple = new Product("Apple", 4.95);
+        user.addProduct(apple, 3);
+        user.removeProduct(apple, 1);
+        double totalPrice = user.getTotalPrice();
+        assert (totalPrice == 9.9);
+        System.out.println("Pass test case 2");
+    }
+
+    public static void testCase3() {
+        User user = new User("John Doe", "john.doe@example.com");
+        Product apple = new Product("Apple", 4.95);
+        Product apple2 = new Product("Apple", 5);
+        user.addProduct(apple, 3);
+        user.removeProduct(apple2, 1);
+        double totalPrice = user.getTotalPrice();
+        System.out.println(totalPrice);
+        assert (totalPrice == 9.9);
+        System.out.println("Pass test case 3");
+    }
+
 }

@@ -1,0 +1,8 @@
+John Doe
+john.doe@example.com
+Apple
+4.95
+3
+Apple
+5
+-1

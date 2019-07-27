@@ -10,6 +10,7 @@ package basicecommerce.models;
  * @author admin
  */
 public class Product {
+
     private String _name;
     private double _price;
 
@@ -17,7 +18,7 @@ public class Product {
         this._name = _name;
         this._price = _price;
     }
-    
+
     public String getName() {
         return _name;
     }
@@ -32,5 +33,14 @@ public class Product {
 
     public void setPrice(double _price) {
         this._price = _price;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        Product product = (Product) obj;
+        return (product._name == this._name && product._price == this._price);
     }
 }

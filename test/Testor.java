@@ -28,6 +28,7 @@ public class Testor {
         user.addProduct(orange, 1);
         double totalPrice = user.getTotalPrice();
         assert (totalPrice == 13.89);
+        System.out.println("Pass test case 1");
     }
     
     public static void testCase2() {
@@ -37,5 +38,6 @@ public class Testor {
         user.removeProduct(apple, 1);
         double totalPrice = user.getTotalPrice();
         assert (totalPrice == 9.9);
+        System.out.println("Pass test case 2");
     }
 }

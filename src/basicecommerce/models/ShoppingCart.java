@@ -28,12 +28,16 @@ public class ShoppingCart {
     }
 
     public void addProduct(Product prod, int amount) {
+        if (amount <= 0) {
+            return;
+        }
         Integer amountProd = _products.get(prod);
         amountProd = amountProd != null ? amountProd + amount : amount;
         _products.put(prod, amountProd);
     }
 
     public void removeProduct(Product prod, int amount) {
+        amount = Math.abs(amount);
         Integer amountProd = _products.get(prod);
         if (amountProd == null) {
             return;
