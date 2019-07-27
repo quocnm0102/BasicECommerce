@@ -5,6 +5,8 @@
  */
 package basicecommerce.models;
 
+import java.util.Objects;
+
 /**
  *
  * @author admin
@@ -41,6 +43,12 @@ public class Product {
             return false;
         }
         Product product = (Product) obj;
-        return (product._name == this._name && product._price == this._price);
+        return (product._name.equals(this._name) && product._price == this._price);
     }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(_name, _price);
+    }
+
 }
